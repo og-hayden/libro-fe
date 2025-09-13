@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib/api';
 import { Sidebar, SidebarContent, SidebarSection } from '../ui/Sidebar';
 import { ShareButton } from '../ui/ShareButton';
@@ -48,7 +48,7 @@ export function ProphecySidebar({ prophecyId, isVisible, onClose, onNavigateToVe
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFulfillment, setSelectedFulfillment] = useState<number>(0);
 
-  const loadProphecyDetails = async () => {
+  const loadProphecyDetails = useCallback(async () => {
     if (!prophecyId) return;
     
     setIsLoading(true);
@@ -64,7 +64,7 @@ export function ProphecySidebar({ prophecyId, isVisible, onClose, onNavigateToVe
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [prophecyId]);
 
   useEffect(() => {
     if (prophecyId && isVisible) {
