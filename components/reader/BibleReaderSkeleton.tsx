@@ -1,6 +1,6 @@
 'use client';
 
-import { Skeleton } from '@/components/ui/Skeleton';
+import { Skeleton } from '../ui/Skeleton';
 
 export function BibleReaderSkeleton() {
   return (

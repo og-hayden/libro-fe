@@ -3,15 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { BibleReader } from '@/components/reader/BibleReader';
-import { AnalysisSidebar } from '@/components/reader/AnalysisSidebar';
-import { ChapterThumbnails } from '@/components/reader/ChapterThumbnails';
-import { StrongsConcordance } from '@/components/reader/StrongsConcordance';
+import { AnalysisSidebar } from '@/components/sidebars/AnalysisSidebar';
+import { ChapterThumbnails } from '@/components/layout/ChapterThumbnails';
+import { StrongsConcordance } from '@/components/analysis/StrongsConcordance';
 import { BibleReaderSkeleton } from '@/components/reader/BibleReaderSkeleton';
-import { StrongsSidebar } from '@/components/reader/StrongsSidebar';
-import { ScholarlyAnalysisView } from '@/components/reader/ScholarlyAnalysisView';
-import { MetadataSidebar } from '@/components/reader/MetadataSidebar';
-import { ProphecySidebar } from '@/components/reader/ProphecySidebar';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { StrongsSidebar } from '@/components/sidebars/StrongsSidebar';
+import { ScholarlyAnalysisView } from '@/components/analysis/ScholarlyAnalysisView';
+import { MetadataSidebar } from '@/components/sidebars/MetadataSidebar';
+import { ProphecySidebar } from '@/components/sidebars/ProphecySidebar';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { api } from '@/lib/api';
 import { useUrlState, parseVerseSelection } from '@/hooks/useUrlState';
 

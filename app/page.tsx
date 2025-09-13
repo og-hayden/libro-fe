@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { BibleNavMenu } from '@/components/reader/BibleNavMenu';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { BibleNavMenu } from '@/components/layout/BibleNavMenu';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 
 export default function Home() {
   const router = useRouter();
