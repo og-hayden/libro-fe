@@ -69,11 +69,6 @@ export function FloatingAskInput({
     }
   };
 
-  const handleCancel = () => {
-    onCancel();
-    setQuestion('');
-  };
-
   if (!shouldRender) return null;
 
   return (

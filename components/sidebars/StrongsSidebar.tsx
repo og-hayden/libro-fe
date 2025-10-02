@@ -280,7 +280,7 @@ export function StrongsSidebar({ strongsNumber, isVisible, onClose, onNavigateTo
                     All Verses ({allVerses.length})
                   </h4>
                 </div>
-                {groupVersesByBook(allVerses).map((bookGroup, bookIndex) => (
+                {groupVersesByBook(allVerses).map((bookGroup) => (
                   <div key={bookGroup.book.id} className="space-y-2">
                     <button
                       onClick={() => toggleBook(bookGroup.book.name)}

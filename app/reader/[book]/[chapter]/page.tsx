@@ -241,7 +241,7 @@ export default function ReaderPage() {
       {/* Main Layout */}
       <div className="flex h-screen">
         {/* Main Content - Dynamic Width */}
-        <div className={`bg-white dark:bg-stone-900 transition-all duration-300 ${(showSidebar || showStrongsSidebar || showMetadataSidebar || showProphecySidebar) ? 'w-2/3' : 'w-full'}`}>
+        <div className={`transition-all duration-300 ${(showSidebar || showStrongsSidebar || showMetadataSidebar || showProphecySidebar) ? 'w-2/3' : 'w-full'}`}>
           {strongsConcordance ? (
             <StrongsConcordance
               strongsNumber={strongsConcordance}

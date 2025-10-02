@@ -47,6 +47,11 @@ export function Sidebar({
               ) : (
                 <div className="text-lg font-medium text-stone-900 dark:text-stone-100 flex-1">{title}</div>
               )}
+              {headerAction && (
+                <div className="ml-4">
+                  {headerAction}
+                </div>
+              )}
               <button
                 onClick={onClose}
                 className="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors ml-4 p-1 rounded-lg bg-stone-200/50 dark:bg-stone-800"

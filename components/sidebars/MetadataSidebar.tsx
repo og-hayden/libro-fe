@@ -1,9 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { Sidebar, SidebarContent, SidebarSection } from './shared/Sidebar'
-import { ChevronRight } from 'lucide-react'
 import { ShareButton } from '../features/sharing/ShareButton'
 
 interface Theme {

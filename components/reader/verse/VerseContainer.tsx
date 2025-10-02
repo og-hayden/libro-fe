@@ -1,32 +1,41 @@
 import React from 'react';
-import { Verse, VerseRange, TextSize, ProphecyData } from '../types';
+import { Verse, TextSize, ProphecyData } from '../types';
 import { VerseItem } from './VerseItem';
+import { ChapterArt } from '../ChapterArt';
 import { useProphecyData } from '../hooks/useProphecyData';
 
 interface VerseContainerProps {
   verses: Verse[];
   selectedVerseId: number | null;
-  selectedVerseRange: VerseRange | null;
+  selectedVerseRange: { startVerseId: number; endVerseId: number } | null;
   hoveredVerseId: number | null;
   isSelecting: boolean;
   textSize: TextSize;
   selectedPerspectives: string[];
-  isStrongsSidebarOpen: boolean;
-  isSummarizing: boolean;
-  isAsking: boolean;
-  showAskField: boolean;
-  prophecyData: ProphecyData | null;
-  isFocusMode: boolean;
-  onStartSelection: (verseId: number) => void;
-  onEndSelection: (verseId: number) => void;
-  onClearSelection: () => void;
-  onVerseHover: (verseId: number) => void;
-  onVerseLeave: () => void;
-  onVerseClick: (verseId: number) => void;
+  bookId?: number;
+  chapterNumber?: number;
+  bookName?: string;
+  prophecyData?: ProphecyData | null;
+  isStrongsSidebarOpen?: boolean;
+  isSummarizing?: boolean;
+  isAsking?: boolean;
+  showAskField?: boolean;
+  isFocusMode?: boolean;
+  onVerseSelect?: (verseId: number | null) => void;
+  onVerseRangeSelect?: (range: { startVerseId: number; endVerseId: number } | null) => void;
+  onVerseHover: (verseId: number | null) => void;
+  onSelectionStart?: (verseId: number) => void;
+  onAnalyze?: (verseId?: number) => void;
+  onStartSelection?: (verseId: number) => void;
+  onEndSelection?: (verseId: number) => void;
+  onClearSelection?: () => void;
+  onVerseLeave?: () => void;
+  onVerseClick?: (verseId: number) => void;
   onStrongsClick: (strongsNumber: string) => void;
-  onSummarize?: () => void;
-  onAsk?: () => void;
+  onSummarize: (startVerseId: number, endVerseId: number) => void;
+  onAsk: (verseIds: number[], question: string) => void;
   onProphecyClick: (prophecyId: number) => void;
+  onShowMetadata?: () => void;
 }
 
 export function VerseContainer({
@@ -42,7 +51,9 @@ export function VerseContainer({
   isAsking,
   showAskField,
   prophecyData,
-  isFocusMode,
+  bookId,
+  chapterNumber,
+  bookName,
   onStartSelection,
   onEndSelection,
   onClearSelection,
@@ -53,19 +64,33 @@ export function VerseContainer({
   onSummarize,
   onAsk,
   onProphecyClick,
+  onShowMetadata,
 }: VerseContainerProps) {
   const { isProphecyVerse, isFulfillmentVerse, getFulfillmentGroupInfo } = useProphecyData({
-    prophecyData,
+    prophecyData: prophecyData || null,
     verses,
   });
 
   return (
-    <div className="flex-1 overflow-y-auto scrollbar-hide px-12 py-8 relative" style={{
-      maskImage: 'linear-gradient(to bottom, transparent 0px, black 32px, black 100%)',
-      WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 32px, black 100%)'
-    }}>
-      <div className="max-w-4xl mx-auto">
-        <div className="space-y-0 pb-8">
+    <div className="flex-1 overflow-y-auto scrollbar-hide relative">
+      {/* Chapter Artwork - Wider than verses but not full screen */}
+      {bookId && chapterNumber && (
+        <div className="mb-8 px-6 -mt-2">
+          <div className="max-w-7xl mx-auto">
+            <ChapterArt 
+              bookId={bookId}
+              chapterNumber={chapterNumber}
+              bookName={bookName}
+              onShowMetadata={onShowMetadata}
+            />
+          </div>
+        </div>
+      )}
+      
+      {/* Verses Container - Constrained Width */}
+      <div className="px-12 py-2">
+        <div className="max-w-4xl mx-auto">
+          <div className="space-y-0 pb-8">
           {verses.map((verse, index) => {
             const prophecyVerse = isProphecyVerse(verse.verse_number);
             const fulfillmentVerse = isFulfillmentVerse(verse.verse_number);
@@ -83,19 +108,19 @@ export function VerseContainer({
                 isSelecting={isSelecting}
                 textSize={textSize}
                 selectedPerspectives={selectedPerspectives}
-                isStrongsSidebarOpen={isStrongsSidebarOpen}
-                isSummarizing={isSummarizing}
-                isAsking={isAsking}
-                showAskField={showAskField}
-                onStartSelection={onStartSelection}
-                onEndSelection={onEndSelection}
-                onClearSelection={onClearSelection}
+                isStrongsSidebarOpen={isStrongsSidebarOpen || false}
+                isSummarizing={isSummarizing || false}
+                isAsking={isAsking || false}
+                showAskField={showAskField || false}
+                onStartSelection={onStartSelection || (() => {})}
+                onEndSelection={onEndSelection || (() => {})}
+                onClearSelection={onClearSelection || (() => {})}
                 onVerseHover={onVerseHover}
-                onVerseLeave={onVerseLeave}
-                onVerseClick={onVerseClick}
+                onVerseLeave={() => onVerseLeave?.()}
+                onVerseClick={onVerseClick || (() => {})}
                 onStrongsClick={onStrongsClick}
-                onSummarize={onSummarize}
-                onAsk={onAsk}
+                onSummarize={() => onSummarize?.(verse.id, verse.id)}
+                onAsk={() => onAsk?.([verse.id], '')}
                 onProphecyClick={onProphecyClick}
                 prophecyVerse={prophecyVerse}
                 fulfillmentVerse={fulfillmentVerse}
@@ -104,6 +129,7 @@ export function VerseContainer({
               />
             );
           })}
+          </div>
         </div>
       </div>
     </div>

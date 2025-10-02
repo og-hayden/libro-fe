@@ -18,7 +18,6 @@ interface StrongsWord {
 }
 
 export function EnhancedStrongsText({ 
-  text: _text,
   textWithStrongs, 
   isVerseHovered, 
   onStrongsClick,

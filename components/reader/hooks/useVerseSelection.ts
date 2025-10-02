@@ -32,7 +32,7 @@ export function useVerseSelection({
     setHoveredVerseId(null);
   };
 
-  const handleVerseHover = (verseId: number) => {
+  const handleVerseHover = (verseId: number | null) => {
     setHoveredVerseId(verseId);
   };
 

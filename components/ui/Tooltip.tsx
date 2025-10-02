@@ -59,21 +59,6 @@ export function Tooltip({
     }
   };
 
-  const getArrowClasses = () => {
-    switch (position) {
-      case 'top':
-        return 'top-full left-1/2 transform -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-stone-800 dark:border-t-stone-200';
-      case 'bottom':
-        return 'bottom-full left-1/2 transform -translate-x-1/2 border-l-transparent border-r-transparent border-t-transparent border-b-stone-800 dark:border-b-stone-200';
-      case 'left':
-        return 'left-full top-1/2 transform -translate-y-1/2 border-t-transparent border-b-transparent border-r-transparent border-l-stone-800 dark:border-l-stone-200';
-      case 'right':
-        return 'right-full top-1/2 transform -translate-y-1/2 border-t-transparent border-b-transparent border-l-transparent border-r-stone-800 dark:border-r-stone-200';
-      default:
-        return 'top-full left-1/2 transform -translate-x-1/2 border-l-transparent border-r-transparent border-b-transparent border-t-stone-800 dark:border-t-stone-200';
-    }
-  };
-
   return (
     <div 
       className={`relative inline-block ${className}`}

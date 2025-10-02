@@ -32,18 +32,7 @@ const PERSPECTIVE_GROUPS = {
 
 export function PerspectivesDropdown({ selectedPerspectives, onSelectionChange }: PerspectivesDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Handle visibility and animations
-  useEffect(() => {
-    if (isOpen) {
-      // Small delay to ensure DOM is ready, then start animation
-      setTimeout(() => setIsAnimating(true), 10);
-    } else {
-      setIsAnimating(false);
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

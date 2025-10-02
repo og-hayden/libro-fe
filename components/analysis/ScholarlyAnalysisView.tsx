@@ -46,11 +46,6 @@ interface ScholarlyAnalysisViewProps {
 }
 
 export function ScholarlyAnalysisView({
-  verseRangeStart: _verseRangeStart,
-  verseRangeEnd: _verseRangeEnd,
-  reference: _reference,
-  verseText: _verseText,
-  perspectives: _perspectives,
   scholarlyData,
   onBackToReading
 }: ScholarlyAnalysisViewProps) {

@@ -12,7 +12,7 @@ import { VerseContainer } from './verse/VerseContainer';
 import { BibleReaderFooter } from './footer/BibleReaderFooter';
 import { useVerseSelection } from './hooks/useVerseSelection';
 import { useFocusMode } from './hooks/useFocusMode';
-import { Book, Chapter, Verse, VerseRange, ProphecyData, Pagination, TextSize, BibleReaderProps } from './types';
+import { Book, Chapter, Verse, ProphecyData, Pagination, TextSize, BibleReaderProps } from './types';
 
 export function BibleReader(props: BibleReaderProps) {
   const {
@@ -68,7 +68,7 @@ export function BibleReader(props: BibleReaderProps) {
     onVerseRangeSelect,
   });
 
-  const { isFocusMode, showFocusToast, setShowFocusToast, toggleFocusMode, exitFocusMode } = useFocusMode();
+  const { isFocusMode, showFocusToast, setShowFocusToast, exitFocusMode } = useFocusMode();
 
   // Data loading effect
   useEffect(() => {
@@ -217,10 +217,6 @@ export function BibleReader(props: BibleReaderProps) {
     }
   };
 
-  const handleFocusModeToggle = () => {
-    toggleFocusMode();
-  };
-
   const handleProphecyClick = (prophecyId: number) => {
     if (onShowProphecy) {
       onShowProphecy(prophecyId);
@@ -258,23 +254,20 @@ export function BibleReader(props: BibleReaderProps) {
         }}
       />
       
-      <div className={`h-full flex flex-col transition-all duration-300 ${showStrongsSidebar ? 'ml-96' : ''}`}>
-        {/* Header */}
-        <BibleReaderHeader
-          book={book}
-          chapter={chapter}
-          verses={verses}
-          textSize={textSize}
-          isFocusMode={isFocusMode}
-          selectedPerspectives={selectedPerspectives}
-          bookmark={bookmark}
-          onBackToBooks={onBackToBooks}
-          onReturnToBookmark={onReturnToBookmark}
-          onShowMetadata={onShowMetadata}
-          onFocusMode={handleFocusModeToggle}
-          onTextSizeChange={setTextSize}
-          onPerspectivesChange={setSelectedPerspectives}
-        />
+      <div className={`h-full flex flex-col transition-all duration-300 ${showStrongsSidebar ? 'ml-96' : ''} relative`}>
+        {/* Header - Positioned absolutely to float over content */}
+        <div className="absolute top-0 left-0 right-0 z-10">
+          <BibleReaderHeader
+            textSize={textSize}
+            isFocusMode={isFocusMode}
+            selectedPerspectives={selectedPerspectives}
+            bookmark={bookmark}
+            onBackToBooks={onBackToBooks}
+            onReturnToBookmark={onReturnToBookmark}
+            onTextSizeChange={setTextSize}
+            onPerspectivesChange={setSelectedPerspectives}
+          />
+        </div>
 
         {/* Verses */}
         <VerseContainer
@@ -286,6 +279,9 @@ export function BibleReader(props: BibleReaderProps) {
           textSize={textSize}
           selectedPerspectives={selectedPerspectives}
           isStrongsSidebarOpen={isStrongsSidebarOpen || false}
+          bookId={bookId || undefined}
+          chapterNumber={chapterNumber || undefined}
+          bookName={book?.name}
           isSummarizing={isSummarizing}
           isAsking={isAsking}
           showAskField={showAskField}
@@ -304,11 +300,11 @@ export function BibleReader(props: BibleReaderProps) {
           onSummarize={handleSummarize}
           onAsk={handleAsk}
           onProphecyClick={handleProphecyClick}
+          onShowMetadata={onShowMetadata}
         />
 
         {/* Footer */}
         <BibleReaderFooter
-          book={book}
           pagination={pagination}
           isFocusMode={isFocusMode}
           onChapterChange={onChapterChange}

@@ -1,17 +1,14 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Book, Pagination } from '../types';
+import { Pagination } from '../types';
 import ChapterNavigation from '@/components/layout/ChapterNavigation';
 
 interface BibleReaderFooterProps {
-  book: Book;
   pagination: Pagination;
   isFocusMode: boolean;
   onChapterChange?: (chapterNumber: number) => void;
 }
 
 export function BibleReaderFooter({
-  book,
   pagination,
   isFocusMode,
   onChapterChange,

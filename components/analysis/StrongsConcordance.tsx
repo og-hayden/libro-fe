@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import { api } from '@/lib/api';
 
@@ -55,28 +55,28 @@ export function StrongsConcordance({ strongsNumber, onNavigateToVerse, onClose }
   const [totalVerses, setTotalVerses] = useState(0);
   const [strongsDefinition, setStrongsDefinition] = useState<StrongsDefinition | null>(null);
 
-  const loadConcordanceGroups = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/strongs/concordance/${strongsNumber}`);
-      
-      if (response.book_groups) {
-        setBookGroups(response.book_groups);
-        setTotalBooks(response.total_books);
-        setTotalVerses(response.total_verses);
-        setStrongsDefinition(response.strongs_entry);
-      }
-    } catch (error) {
-      console.error('Failed to load concordance:', error);
-      setBookGroups([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadConcordanceGroups = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get(`/strongs/concordance/${strongsNumber}`);
+        
+        if (response.book_groups) {
+          setBookGroups(response.book_groups);
+          setTotalBooks(response.total_books);
+          setTotalVerses(response.total_verses);
+          setStrongsDefinition(response.strongs_entry);
+        }
+      } catch (error) {
+        console.error('Failed to load concordance:', error);
+        setBookGroups([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadConcordanceGroups();
-  }, [strongsNumber, loadConcordanceGroups]);
+  }, [strongsNumber]);
 
   const loadBookVerses = async (bookId: number) => {
     if (bookVerses[bookId]) return; // Already loaded
